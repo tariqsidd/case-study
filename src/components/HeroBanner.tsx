@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import {fetchGraphQL, GRAPHQL_QUERIES} from '@/lib/graphql'
 import {APP_CONFIG} from "@/config/constants";
-import ErrorBoundary from "@/components/common-components/ErrorBoundary";
 
 interface BannerData {
     BannerCollection: Array<{
@@ -20,13 +19,17 @@ const getBannerData= async ()=>{
         return await fetchGraphQL<BannerData>(GRAPHQL_QUERIES.HERO_BANNER)
     }
     catch (e) {
-        throw new Error(`Banner Data GraphQL request failed: ${e.message}`)
+        throw new Error(`Banner Data GraphQL request failed: ${(e as Error).message}`)
     }
 }
 
 export default async function HeroBanner() {
     try {
         const bannerData = await getBannerData()
+        const banner = bannerData.BannerCollection[0]
+        const imageUrl = banner.image?.fileAsset?.versionPath
+            ? `${APP_CONFIG.IMAGE_BASE_URL}${banner.image.fileAsset.versionPath}`
+            : null
 
         // in Case API returns no data or error
         if(!bannerData?.BannerCollection.length){
@@ -62,11 +65,7 @@ export default async function HeroBanner() {
             )
         }
 
-        const banner = bannerData.BannerCollection[0]
 
-        const imageUrl = banner.image?.fileAsset?.versionPath
-            ? `${APP_CONFIG.IMAGE_BASE_URL}${banner.image.fileAsset.versionPath}`
-            : null
 
         return (
             <section className="relative bg-black/50 py-32 overflow-hidden">
@@ -100,12 +99,9 @@ export default async function HeroBanner() {
     }
     catch (e) {
         return(
-            <ErrorBoundary
-                reset
-                error={e.message}
-                title={'Oops unable to fetch Banner Data'}
-                message={e.message}
-            />
+            <div>
+                Error
+            </div>
         )
     }
 

@@ -1,10 +1,10 @@
 // Application Configuration Constants
 export const APP_CONFIG = {
   // dotCMS GraphQL API Configuration
-  GRAPHQL_ENDPOINT: process.env.NEXT_PUBLIC_DOTCMS_GRAPHQL_ENDPOINT,
+  GRAPHQL_ENDPOINT: process.env.NEXT_PUBLIC_DOTCMS_GRAPHQL_ENDPOINT || '',
 
   // Image Configuration
-  IMAGE_BASE_URL: process.env.WP_IMAGES_URL,
+  IMAGE_BASE_URL: process.env.WP_IMAGES_URL || '',
 
 } as const
 

@@ -1,7 +1,6 @@
 import {Suspense} from 'react'
 import {fetchGraphQL, GRAPHQL_QUERIES} from '@/lib/graphql'
 import ProductList from "@/components/common-components/ProductList";
-import ErrorBoundary from "@/components/common-components/ErrorBoundary";
 import NoDataFound from "@/components/common-components/NoDataFound";
 
 export interface BlogData {
@@ -21,7 +20,7 @@ const getBlogData= async ()=>{
         return await fetchGraphQL<BlogData>(GRAPHQL_QUERIES.BLOGS)
     }
     catch (e) {
-        throw new Error(`Blog Data GraphQL request failed: ${e.message}`)
+        throw new Error(`Blog Data GraphQL request failed: ${(e as Error).message}`)
     }
 }
 export default async function BlogFeedPreview() {
@@ -55,13 +54,11 @@ export default async function BlogFeedPreview() {
         )
     }
     catch (e) {
+        const error = e as Error;
         return(
-            <ErrorBoundary
-                reset
-                error={e.message}
-                title={'Oops unable to fetch Blog Data'}
-                message={e.message}
-            />
+            <div>
+                Error
+            </div>
         )
     }
 }

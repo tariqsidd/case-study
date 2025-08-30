@@ -1,7 +1,6 @@
 import {Suspense} from 'react'
 import {fetchGraphQL, GRAPHQL_QUERIES} from '@/lib/graphql'
 import ProductList from "@/components/common-components/ProductList";
-import ErrorBoundary from "@/components/common-components/ErrorBoundary";
 import NoDataFound from "@/components/common-components/NoDataFound";
 
 export interface EventData {
@@ -21,7 +20,7 @@ const getEventData= async ()=>{
         return await fetchGraphQL<EventData>(GRAPHQL_QUERIES.EVENTS)
     }
     catch (e) {
-        throw new Error(`Event Data GraphQL request failed: ${e.message}`)
+        throw new Error(`Event Data GraphQL request failed: ${(e as Error).message}`)
     }
 }
 
@@ -57,12 +56,9 @@ export default async function RecommendedEvents() {
     }
     catch (e) {
         return(
-            <ErrorBoundary
-                reset
-                error={e.message}
-                title={'Oops unable to fetch Events Data'}
-                message={e.message}
-            />
+            <div>
+                Error
+            </div>
         )
     }
 }
