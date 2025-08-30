@@ -1,7 +1,8 @@
-import {Suspense} from 'react'
+import {JSX, Suspense} from 'react'
 import {fetchGraphQL, GRAPHQL_QUERIES} from '@/lib/graphql'
 import ProductList from "@/components/common-components/ProductList";
 import NoDataFound from "@/components/common-components/NoDataFound";
+import Loader from "@/components/common-components/Loader";
 
 export interface BlogData {
     BlogCollection: Array<{
@@ -46,7 +47,7 @@ export default async function BlogFeedPreview() {
                             mattis, pulvinar dapibus leo.
                         </p>
                     </div>
-                    <Suspense fallback={'Loading...'}>
+                    <Suspense fallback={<Loader /> as JSX.Element}>
                         <ProductList id={'BlogCollection'} productData={blogData}/>
                     </Suspense>
                 </div>
