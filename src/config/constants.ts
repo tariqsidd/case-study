@@ -1,32 +1,11 @@
 // Application Configuration Constants
 export const APP_CONFIG = {
   // dotCMS GraphQL API Configuration
-  GRAPHQL_ENDPOINT: process.env.NEXT_PUBLIC_DOTCMS_GRAPHQL_ENDPOINT || 'https://demo.dotcms.com/api/v1/graphql',
-
-  // Application Settings
-  APP_NAME: 'dotCMS Marketing Landing Page',
-  APP_DESCRIPTION: 'Experience the power of headless content management',
-
-  // Content Limits
-  DEFAULT_LIMIT: 3,
-  DEFAULT_OFFSET: 0,
+  GRAPHQL_ENDPOINT: process.env.NEXT_PUBLIC_DOTCMS_GRAPHQL_ENDPOINT,
 
   // Image Configuration
-  IMAGE_BASE_URL: 'https://demo.dotcms.com',
+  IMAGE_BASE_URL: process.env.WP_IMAGES_URL,
 
-  // Social Media Links
-  SOCIAL_LINKS: {
-    facebook: '#',
-    twitter: '#',
-    linkedin: '#',
-  },
-
-  // Contact Information
-  CONTACT: {
-    email: 'info@dotcms.com',
-    phone: '+1 (555) 123-4567',
-    address: '123 CMS Street, Digital City, DC 12345',
-  },
 } as const
 
 // GraphQL Query Constants

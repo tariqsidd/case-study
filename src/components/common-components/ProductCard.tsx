@@ -1,12 +1,13 @@
 import Image from 'next/image'
 import ReadMore from "@/components/common-components/ReadMore";
-interface Product {
-    image?: {
-        versionPath?: string | null;
-    };
-    title?: string;
-    retailPrice?: number | null;
-    description?: string;
+import {APP_CONFIG} from "@/config/constants";
+export interface Product {
+    image: {
+        versionPath: string | null;
+    } | null;
+    title: string | null;
+    retailPrice: number | null;
+    description?: string | null;
 }
 
 interface ProductCardProps {
@@ -14,8 +15,7 @@ interface ProductCardProps {
     index: number;
 }
 const ProductCard = ({ product, index }: ProductCardProps) => {
-    const { image, title, retailPrice, description } = product;
-    const imageUrl = image?.versionPath ? `https://demo.dotcms.com${image.versionPath}`: null
+    const imageUrl = product?.image?.versionPath ? `${APP_CONFIG.IMAGE_BASE_URL}${product?.image.versionPath}` : null;
 
     return (
         <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
@@ -23,7 +23,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
                 {imageUrl ? (
                     <Image
                         src={imageUrl}
-                        alt={title || 'Product image'}
+                        alt={product?.title || 'Product image'}
                         width={800}  // Required - original image width
                         height={400} // Required - original image height
                         className="w-full h-64 object-cover"
@@ -44,14 +44,14 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
             </div>
             <div className="p-6">
                 <h3 className="text-xl font-semibold text-gray-900 mb-3 line-clamp-1">
-                    {title || `Product ${index + 1}`}
+                    {product?.title || `Product ${index + 1}`}
                 </h3>
-                {retailPrice && (
+                {product?.retailPrice && (
                     <div className="text-2xl font-bold text-blue-600 mb-4">
-                        ${retailPrice}
+                        ${product?.retailPrice}
                     </div>
                 )}
-                <ReadMore description={description || ''} />
+                <ReadMore description={product?.description || ''} />
             </div>
         </div>
     );

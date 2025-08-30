@@ -1,23 +1,29 @@
 import ProductCard from "@/components/common-components/ProductCard";
-import {mapToProductCard} from "@/lib/utils";
+import {cardMapper} from "@/lib/utils";
+import {ProductData} from "@/components/RecommendedActivities";
+import {BlogData} from "@/components/BlogFeedPreview";
+import {EventData} from "@/components/RecommendedEvents";
 
-// Generic interface that can work with any data structure
-interface GenericData {
-    [key: string]: Array<any>;
+type DataKey = keyof ProductData | keyof BlogData | keyof EventData;
+interface ProductListProps {
+    productData: ProductData | BlogData | EventData;
+    id: DataKey
 }
 
-interface ProductListProps<T extends GenericData> {
-    productData: T;
-    id: keyof T;
-}
+const ProductList = ({productData, id}: ProductListProps) => {
+    // Use a type guard to safely access the property
+    const getItems = (data: ProductData | BlogData | EventData, key: DataKey) => {
+        if (key in data) {
+            return (data as any)[key]; // Use assertion only after checking key existence
+        }
+        return undefined;
+    };
 
-const ProductList = <T extends GenericData>({productData, id}: ProductListProps<T>) => {
-    const items = productData[id];
-    
+    const items = getItems(productData, id);
+
     if (!items || !Array.isArray(items)) {
         return <div>No items found</div>;
     }
-
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {items.map((product, index) => {
@@ -25,7 +31,7 @@ const ProductList = <T extends GenericData>({productData, id}: ProductListProps<
                     <ProductCard
                         key={index}
                         index={index}
-                        product={mapToProductCard(productData, index, id as string)}
+                        product={cardMapper(id, product)}
                     />
                 )
             })}

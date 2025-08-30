@@ -33,7 +33,7 @@ export async function fetchGraphQL<T>(query: string): Promise<T> {
 
     return result.data
   } catch (error) {
-    notFound()
+    // notFound()
     console.error('GraphQL fetch error:', error)
     throw error
   }
