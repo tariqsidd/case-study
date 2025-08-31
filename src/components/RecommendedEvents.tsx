@@ -29,7 +29,7 @@ export default async function RecommendedEvents() {
     try {
         const eventData = await getEventData()
 
-        if(!eventData.calendarEventCollection.length){
+        if(!eventData.calendarEventCollection?.length){
             return (
                 <NoDataFound
                     title={'No Events Found'}

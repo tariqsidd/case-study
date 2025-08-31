@@ -32,7 +32,7 @@ export default async function RecommendedActivities() {
   try {
     const productData =  await getProductsData()
 
-    if(!productData.ProductCollection.length){
+    if(!productData.ProductCollection?.length){
       return (
           <NoDataFound
               title={'No Products Found'}

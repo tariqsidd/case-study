@@ -44,7 +44,7 @@ const ReadMore = ({ description }: ReadMoreProps) => {
                     />
                 ) : (
                     <p className={`text-gray-600 text-base ${readMore ? '' : 'line-clamp-1'}`}>
-                        {description.length ? description : placeHolder}
+                        {description?.length ? description : placeHolder}
                     </p>
                 )}
             </div>

@@ -28,7 +28,7 @@ export default async function BlogFeedPreview() {
     try {
         const blogData = await getBlogData()
 
-        if(!blogData.BlogCollection.length){
+        if(!blogData.BlogCollection?.length){
             return (
                 <NoDataFound
                     title={'No Blogs Found'}
